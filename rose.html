@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>玫瑰花</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="btn" onclick="playAudio()">点击此处获取我精心为你准备的玫瑰花</div>
+    <audio id="backgroundAudio" src="./one-piece.mp3" autoplay muted loop style="display:none;"></audio>
+    </audio>
+    <div class="number">3</div>
+    <div class="box" style="opacity: 0">送给全世界最美丽的冰冰~</div>
+    <style>
+      #btn {
+        padding: 28px 26px;
+        background: #0088fa;
+        font-size: 50px;
+        font-weight: 400;
+        text-align: center;
+        color: #ffffff;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .box {
+        font-size: 80px;
+        color: #D93026;
+        text-align: center;
+      }
+      .number {
+        font-size: 130px;
+        text-align: center;
+        transition: opacity 1s ease-in-out;
+        opacity: 0;
+        margin-top: 100px;
+      }
+      .number.visible {
+        opacity: 1;
+      }
+    </style>
+    <p style="text-align: center">
+      <canvas id="c" height="500" width="500"></canvas>
+      <script></script>
+      <script>
+        // 手动播放按钮
+        function playAudio() {
+          const btn = document.getElementById("btn");
+          btn.hidden = true
+          const audio = document.getElementById("backgroundAudio");
+          audio.muted = false; // 取消静音
+          audio.play();
+          fadeIn();
+        }
+        
+        function fadeIn() {
+          var num = 3;
+          let timer = setInterval(() => {
+            var dom = document.getElementsByClassName("number");
+            if (dom.length > 0) {
+              dom[0].style.opacity = 1;
+              if(num == 0){
+                dom[0].innerHTML = '准备好了吗？';
+              }else {
+                dom[0].innerHTML = num;
+              }
+            }
+            if (num < 0) {
+              dom[0].hidden = true;
+              var box = document.getElementsByClassName("box");
+              clearInterval(timer);
+              setTimeout(() => {
+                box[0].style.opacity = 1;
+                rose();
+              }, 1000);
+            }
+            num--;
+          }, 2100);
+        }
+
+        var c = document.getElementsByTagName("canvas")[0];
+        var a = c.getContext("2d");
+        var b = document.body;
+        document.body.clientWidth;
+        function p(a, b, c) {
+          if (c > 60)
+            return [
+              S(a * 7) * (13 + 5 / (0.2 + P(b * 4, 4))) - S(b) * 50,
+              b * f + 50,
+              625 + C(a * 7) * (13 + 5 / (0.2 + P(b * 4, 4))) + b * 400,
+              a * 1 - b / 2,
+              a,
+            ];
+          A = a * 2 - 1;
+          B = b * 2 - 1;
+          if (A * A + B * B < 1) {
+            if (c > 37) {
+              n = (j = c & 1) ? 6 : 4;
+              o = 0.5 / (a + 0.01) + C(b * 125) * 3 - a * 300;
+              w = b * h;
+              return [
+                o * C(n) + w * S(n) + j * 610 - 390,
+                o * S(n) - w * C(n) + 550 - j * 350,
+                1180 + C(B + A) * 99 - j * 300,
+                0.4 -
+                  a * 0.1 +
+                  P(1 - B * B, -h * 6) * 0.15 -
+                  a * b * 0.4 +
+                  C(a + b) / 5 +
+                  P(C((o * (a + 1) + (B > 0 ? w : -w)) / 25), 30) *
+                    0.1 *
+                    (1 - B * B),
+                o / 1e3 + 0.7 - o * w * 3e-6,
+              ];
+            }
+            if (c > 32) {
+              c = c * 1.16 - 0.15;
+              o = a * 45 - 20;
+              w = b * b * h;
+              z = o * S(c) + w * C(c) + 620;
+              return [
+                o * C(c) - w * S(c),
+                28 + C(B * 0.5) * 99 - b * b * b * 60 - z / 2 - h,
+                z,
+                (b * b * 0.3 + P(1 - A * A, 7) * 0.15 + 0.3) * b,
+                b * 0.7,
+              ];
+            }
+            o = A * (2 - b) * (80 - c * 2);
+            w =
+              99 -
+              C(A) * 120 -
+              C(b) * (-h - c * 4.9) +
+              C(P(1 - b, 7)) * 50 +
+              c * 2;
+            z = o * S(c) + w * C(c) + 700;
+            return [
+              o * C(c) - w * S(c),
+              B * 99 - C(P(b, 7)) * 50 - c / 3 - z / 1.35 + 450,
+              z,
+              (1 - b / 1.2) * 0.9 + a * 0.1,
+              P(1 - b, 20) / 4 + 0.05,
+            ];
+          }
+        }
+        function rose() {
+          with ((m = Math)) (C = cos), (S = sin), (P = pow), (R = random);
+          c.width = c.height = f = 500;
+          h = -250;
+
+          setInterval(
+            "for(i=0;i<1e4;i++){" +
+              "if(s=p(R(),R(),i%46/.74)){" +
+              "z=s[2];" +
+              "x=~~(s[0]*f/z-h);" +
+              "y=~~(s[1]*f/z-h);" +
+              "if(!m[q=y*f+x]|m[q]>z){" +
+              "m[q]=z;" +
+              // 判断是否是花瓣（假设 c < 32 是花瓣）
+              "if(i % 46 / 0.74 < 32) {" +
+              // 花瓣颜色（#edadbf）
+              "a.fillStyle=`rgb(${~~(255 - s[3] * 5)},${~~(192 - s[4] * 200)},${~~(203 - s[3] * s[3] * 5)})`;" +
+              "} else {" +
+              // 根茎颜色（保持原来的逻辑）
+              'a.fillStyle="rgb("+~(s[3]*h)+","+~(s[4]*h)+","+~(s[3]*s[3]*-80)+")";' +
+              "}" +
+              "a.fillRect(x,y,1,1);" +
+              "}" +
+              "}" +
+              "}",
+            0
+          );
+        }
+      </script>
+      <br />
+    </p>
+  </body>
+</html>
